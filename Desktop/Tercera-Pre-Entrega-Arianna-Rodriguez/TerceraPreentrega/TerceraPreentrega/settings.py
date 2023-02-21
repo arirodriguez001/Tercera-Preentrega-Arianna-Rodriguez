@@ -55,7 +55,7 @@ ROOT_URLCONF = 'TerceraPreentrega.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['C:/Users/Admin/Desktop/Tercera-Pre-Entrega-Arianna-Rodriguez/TerceraPreentrega/reservas/planillas'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

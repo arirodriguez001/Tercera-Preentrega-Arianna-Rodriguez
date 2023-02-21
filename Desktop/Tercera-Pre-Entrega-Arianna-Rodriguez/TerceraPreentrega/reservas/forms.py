@@ -1,5 +1,5 @@
 from django import forms
-from .models import Habitacion, Reserva, Cliente
+from reservas.models import Habitacion, Reserva, Cliente
 
 class HabitacionForm(forms.ModelForm):
     class Meta:
@@ -15,3 +15,8 @@ class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
         fields = ('nombre', 'apellido', 'email', 'telefono')
+
+class BuscarReservaForm(forms.ModelForm):
+    class Meta:
+        model = Reserva
+        fields = ['cliente']

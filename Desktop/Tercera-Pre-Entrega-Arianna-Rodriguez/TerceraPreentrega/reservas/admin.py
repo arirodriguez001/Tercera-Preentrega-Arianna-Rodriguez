@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Habitacion, Cliente, Reserva
+from reservas.models import Habitacion, Cliente, Reserva
 # Register your models here.
 
 admin.site.register(Habitacion)

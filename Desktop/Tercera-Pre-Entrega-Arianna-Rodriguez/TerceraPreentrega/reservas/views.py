@@ -1,13 +1,17 @@
+from django.http import HttpResponse
+from django.template import Template , Context
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Habitacion, Cliente, Reserva
-from .forms import HabitacionForm, ClienteForm, ReservaForm, BuscarReservaForm
+from reservas.models import Habitacion, Cliente, Reserva
+from reservas.forms import HabitacionForm, ClienteForm, ReservaForm, BuscarReservaForm
 
 
 # Create your views here.
+def home(request):
+    return redirect('habitaciones')
 
 def listar_habitaciones(request):
     habitaciones = Habitacion.objects.all()
-    return render(request, 'reservasa/listar_habitaciones.html', {'habitaciones': habitaciones})
+    return render(request, 'reservas/listar_habitaciones.html', {'habitaciones': habitaciones})
 
 def detalle_habitacion(request, pk):
     habitacion = get_object_or_404(Habitacion, pk=pk)
@@ -39,6 +43,8 @@ def crear_cliente(request):
             return redirect('listar_clientes')
     else:
         form = ClienteForm()
+
+    context = {'form': form}
     return render(request, 'reservas/crear_cliente.html', {'form': form})
 
 def listar_reservas(request):
@@ -69,6 +75,17 @@ def buscar_reserva(request):
             reservas = Reserva.objects.filter(cliente__nombre__icontains=cliente,
                                                fecha_inicio__lte=fecha_inicio,
                                                fecha_fin__gte=fecha_fin)
+            return render(request, 'reservas/resultados_busqueda.html', {'reservas': reservas})
+    else:
+        form = BuscarReservaForm()
+    return render(request, 'reservas/buscar_reserva.html', {'form': form})
+
+def resultados_busqueda(request):
+    if request.method == 'POST':
+        form = BuscarReservaForm(request.POST)
+        if form.is_valid():
+            cliente = form.cleaned_data['cliente']
+            reservas = Reserva.objects.filter(cliente=cliente)
             return render(request, 'reservas/resultados_busqueda.html', {'reservas': reservas})
     else:
         form = BuscarReservaForm()
