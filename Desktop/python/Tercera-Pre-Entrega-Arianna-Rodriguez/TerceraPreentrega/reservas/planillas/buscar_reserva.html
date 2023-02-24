@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    {% extends 'base.html' %}
+
+    {% block content %}
+      <h1>Buscar reserva</h1>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Buscar</button>
+      </form>
+    
+      {% if reserva %}
+        <h2>Reserva encontrada</h2>
+        <p>Cliente: {{ reserva.cliente }}</p>
+        <p>Habitación: {{ reserva.habitacion }}</p>
+        <p>Fecha de inicio: {{ reserva.fecha_inicio }}</p>
+        <p>Fecha de fin: {{ reserva.fecha_fin }}</p>
+      {% elif submitted %}
+        <p>No se encontraron reservas para el cliente seleccionado.</p>
+      {% endif %}
+    {% endblock %}
+    
+    
+</body>
+</html>

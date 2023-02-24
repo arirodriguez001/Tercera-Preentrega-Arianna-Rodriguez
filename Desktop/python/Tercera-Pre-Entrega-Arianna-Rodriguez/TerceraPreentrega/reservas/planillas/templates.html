@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+
+{% block content %}
+  <h1>Habitaciones</h1>
+
+  <ul>
+    {% for habitacion in habitaciones %}
+      <li>
+        {{ habitacion.nombre }} - {{ habitacion.descripcion }} - ${{ habitacion.precio }}
+      </li>
+    {% empty %}
+      <li>No hay habitaciones disponibles</li>
+    {% endfor %}
+  </ul>
+
+  <h1>Reservas</h1>
+
+  <h2>Nueva reserva</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Reservar">
+  </form>
+
+  <h2>Reservas existentes</h2>
+  <ul>
+    {% for reserva in reservas %}
+      <li>
+        {{ reserva.habitacion.nombre }} - {{ reserva.fecha_entrada }} - {{ reserva.fecha_salida }} - {{ reserva.cliente.nombre }}
+      </li>
+    {% empty %}
+      <li>No hay reservas existentes</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+
+    
+</body>
+</html>
